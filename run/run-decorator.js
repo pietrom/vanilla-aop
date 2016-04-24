@@ -14,10 +14,18 @@ const after = function(x, y, result, done) {
    }, 5)
 }
 
-const fn = function(x, y, done) {
+const fn1 = function(x, y, done) {
    setTimeout(function() {
       const result = (x + y)
       console.log('+', x, y, result)
+      done(result)
+   }, 150)
+}
+
+const fn2 = function(x, y, done) {
+   setTimeout(function() {
+      const result = (x - y)
+      console.log('-', x, y, result)
       done(result)
    }, 150)
 }
@@ -27,8 +35,13 @@ const decorate = factory({
    after: after
 })
 
-const decorated = decorate(fn)
+const decorated1 = decorate(fn1)
+const decorated2 = decorate(fn2)
 
-decorated(11, 19, function(result) {
+decorated1(11, 19, function(result) {
+   console.log('THE END', result)
+})
+
+decorated2(11, 19, function(result) {
    console.log('THE END', result)
 })
