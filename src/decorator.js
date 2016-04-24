@@ -2,18 +2,22 @@ function last(pseudoArray) {
    return pseudoArray[pseudoArray.length - 1]
 }
 
+function cloneArray(pseudoArray) {
+   return Array.prototype.slice.call(pseudoArray)
+}
+
 function factory(options) {
    const before = options.before
    const after = options.after
    return function decorator(fn) {
       return function proxy() {
          const proxyArgs = Array.prototype.slice.call(arguments, 0, arguments.length - 1)
-         const beforeArgs = Array.prototype.slice.call(proxyArgs)
+         const beforeArgs = cloneArray(proxyArgs)
          const callback = last(arguments)
          beforeArgs.push(function() {
-            const fnArgs = Array.prototype.slice.call(proxyArgs)
+            const fnArgs = cloneArray(proxyArgs)
             fnArgs.push(function(result) {
-               const afterArgs = Array.prototype.slice.call(proxyArgs)
+               const afterArgs = cloneArray(proxyArgs)
                afterArgs.push(result)
                afterArgs.push(function() {
                   callback(result)
