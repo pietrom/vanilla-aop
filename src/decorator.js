@@ -6,14 +6,14 @@ function cloneArray(pseudoArray) {
    return Array.prototype.slice.call(pseudoArray)
 }
 
-function nopAfter() {
+function nop() {
    const done = last(arguments)
    done()
 }
 
 function factory(options) {
-   const before = options.before
-   const after = options.after || nopAfter
+   const before = options.before || nop
+   const after = options.after || nop
    return function decorator(fn) {
       return function proxy() {
          const proxyArgs = Array.prototype.slice.call(arguments, 0, arguments.length - 1)
