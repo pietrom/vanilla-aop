@@ -35,6 +35,34 @@ describe('decorator', function() {
       })
    })
 
+   it('can decorate function - before only', function(testDone) {
+      const logs = [];
+      const before = function(x, y, done) {
+         setTimeout(function() {
+            logs.push('BEFORE ' + x + ', ' + y)
+            done()
+         }, 5)
+      }
+
+      const sum = function(x, y, done) {
+         const result = (x + y)
+         logs.push('SUM ' + x + ', ' + y + ', ' + result)
+         done(result)
+      }
+
+      const decorate = factory({ before: before })
+      const decoratedSum = decorate(sum)
+
+      decoratedSum(11, 19, function(result) {
+         logs.push('THE END ' + result)
+         expect(logs.length).toBe(3);
+         expect(logs[0]).toBe('BEFORE 11, 19')
+         expect(logs[1]).toBe('SUM 11, 19, 30')
+         expect(logs[2]).toBe('THE END 30')
+         testDone()
+      })
+   })
+
    it('can decorate function with arbitrary numbers count', function(testDone) {
       const logs = [];
       const before = function() {
