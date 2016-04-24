@@ -33,5 +33,5 @@ describe('decorator', function() {
          expect(logs[3]).toBe('THE END 30')
          testDone()
       })
-   });
-});
+   })
+})
