@@ -18,5 +18,9 @@
     "jasmine-reporters": "^2.1.1"
   },
   "author": "Pietro Martinelli",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/pietrom/vanilla-aop.git"
+  },
   "license": "LGPL-2.1"
 }
