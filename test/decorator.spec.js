@@ -34,4 +34,32 @@ describe('decorator', function() {
          testDone()
       })
    })
+
+   it('can decorate function with arbitrary numbers count', function(testDone) {
+      const logs = [];
+      const before = function() {
+         const done = arguments[arguments.length - 1]
+         done()
+      }
+      const after = function() {
+         const done = arguments[arguments.length - 1]
+         done()
+      }
+      const multiSum = function(a, b, c, d, e, done) {
+         const result = (a + b + c + d + e)
+         logs.push('SUM ' + result)
+         done(result)
+      }
+
+      const decorate = factory({ before: before, after: after })
+      const decoratedSum = decorate(multiSum)
+
+      decoratedSum(1, 2, 3, 4, 5, function(result) {
+         logs.push('THE END ' + result)
+         expect(logs.length).toBe(2);
+         expect(logs[0]).toBe('SUM 15')
+         expect(logs[1]).toBe('THE END 15')
+         testDone()
+      })
+   })
 })
