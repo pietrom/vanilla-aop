@@ -1,0 +1,22 @@
+{
+  "name": "vanilla-aop",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "node ./src/test/run-tests.js"
+  },
+  "keywords": [
+    "aop",
+    "proxy",
+    "before",
+    "after"
+  ],
+  "devDependencies": {
+    "grunt": "~0.4.5",
+    "jasmine": "^2.4.1",
+    "jasmine-reporters": "^2.1.1"
+  },
+  "author": "Pietro Martinelli",
+  "license": "LGPL-2.1"
+}
