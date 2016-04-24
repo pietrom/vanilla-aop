@@ -21,11 +21,14 @@ function factory(options) {
          const callback = last(arguments)
          beforeArgs.push(function() {
             const fnArgs = cloneArray(proxyArgs)
-            fnArgs.push(function(result) {
+            fnArgs.push(function() {
+               const results = arguments
                const afterArgs = cloneArray(proxyArgs)
-               afterArgs.push(result)
+               for(var i = 0; i < results.length; i++) {
+                  afterArgs.push(results[i])
+               }
                afterArgs.push(function() {
-                  callback(result)
+                  callback.apply(null, results)
                })
                after.apply(null, afterArgs)
             })

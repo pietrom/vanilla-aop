@@ -118,4 +118,39 @@ describe('decorator', function() {
          testDone()
       })
    })
+
+   it('can decorate function with multiple results', function(testDone) {
+      const logs = [];
+      const before = function(x, y, done) {
+         setTimeout(function() {
+            logs.push('BEFORE ' + x + ', ' + y)
+            done()
+         }, 5)
+      }
+      const after = function(x, y, sum, difference, done) {
+         setTimeout(function() {
+            logs.push('AFTER ' + x + ', ' + y + ', ' + sum + ', ' + difference)
+            done()
+         }, 5)
+      }
+      const sumAndDifference = function(x, y, done) {
+         const sum = (x + y)
+         const difference = (x - y)
+         logs.push('FN ' + x + ', ' + y + ', ' + sum + ', ' + difference)
+         done(sum, difference)
+      }
+
+      const decorate = factory({ before: before, after: after })
+      const decoratedSumAndDifference = decorate(sumAndDifference)
+
+      decoratedSumAndDifference(11, 19, function(s, d) {
+         logs.push('THE END ' + s + ', ' + d)
+         expect(logs.length).toBe(4);
+         expect(logs[0]).toBe('BEFORE 11, 19')
+         expect(logs[1]).toBe('FN 11, 19, 30, -8')
+         expect(logs[2]).toBe('AFTER 11, 19, 30, -8')
+         expect(logs[3]).toBe('THE END 30, -8')
+         testDone()
+      })
+   })
 })
