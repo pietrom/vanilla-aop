@@ -1,3 +1,7 @@
+function last(pseudoArray) {
+   return pseudoArray[pseudoArray.length - 1]
+}
+
 function factory(options) {
    const before = options.before
    const after = options.after
@@ -5,7 +9,7 @@ function factory(options) {
       return function proxy() {
          const proxyArgs = Array.prototype.slice.call(arguments, 0, arguments.length - 1)
          const beforeArgs = Array.prototype.slice.call(proxyArgs)
-         const callback = arguments[arguments.length - 1]
+         const callback = last(arguments)
          beforeArgs.push(function() {
             const fnArgs = Array.prototype.slice.call(proxyArgs)
             fnArgs.push(function(result) {
