@@ -1,4 +1,4 @@
-const factory = require('../src/decorator.js');
+const factory = require('../src/index').decorator;
 
 describe('decorator', function() {
    it('can decorate function', function(testDone) {
